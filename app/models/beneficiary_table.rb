@@ -1,0 +1,2 @@
+class BeneficiaryTable < ApplicationRecord
+end

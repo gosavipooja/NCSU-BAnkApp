@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  email: MyString
+  beneficiary_acc_number: 1
+  beneficiary_nick_name: MyString
+
+two:
+  email: MyString
+  beneficiary_acc_number: 1
+  beneficiary_nick_name: MyString
