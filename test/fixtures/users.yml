@@ -7,7 +7,7 @@ one:
   password_digest: MyString
 
 two:
-  email: MyString
-  name: MyString
-  address: MyText
-  password_digest: MyString
+  email: MyString2
+  name: MyString2
+  address: MyText2
+  password_digest: MyString2

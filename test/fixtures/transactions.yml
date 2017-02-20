@@ -10,7 +10,7 @@ one:
   transaction_type: MyString
 
 two:
-  transaction_id: MyString
+  transaction_id: MyString2
   amount: 1
   credited_acc_number: 1
   debited_acc_number: 1

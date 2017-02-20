@@ -6,6 +6,6 @@ one:
   admin_email: MyString
 
 two:
-  email: MyString
+  email: MyString2
   status: MyString
-  admin_email: MyString
+  admin_email: MyString2
