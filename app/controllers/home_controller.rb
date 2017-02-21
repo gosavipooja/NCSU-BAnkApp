@@ -11,6 +11,16 @@ class HomeController < ApplicationController
       redirect_to(:action => 'userhome')
     end
   end
+
+  def logout
+    session[:user_id] = nil
+    session[:name] = nil
+    session[:email] = nil
+    flash[:notice] = "You have been successfully logged out"
+    # redirect_to(:action => 'login')
+    render "login"
+  end
+
 #######this section requires attention
   def login_attempt
     authorized_user = User.authenticate(params[:user][:email], params[:user][:password])
