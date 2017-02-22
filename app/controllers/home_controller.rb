@@ -8,7 +8,7 @@ class HomeController < ApplicationController
   def login
     #Login Form
     if session[:user_id]
-      redirect_to(:action => 'userhome')
+      redirect_to(:action => 'adminhome')
     end
   end
 
@@ -23,9 +23,9 @@ class HomeController < ApplicationController
 
 #######this section requires attention
   def login_attempt
-    authorized_user = User.authenticate(params[:user][:email], params[:user][:password])
+    authorized_user = Admin.authenticate(params[:user][:email], params[:user][:password])
     if session[:user_id]
-      redirect_to(:action => 'userhome')
+      redirect_to(:action => 'adminhome')
     #end
     elsif authorized_user
       session[:user_id] = authorized_user.id
@@ -33,7 +33,7 @@ class HomeController < ApplicationController
       session[:email] = authorized_user.email
 
       # find a way to differentiate between admin and user and login to appropriate page
-      redirect_to(:action => 'userhome')
+      redirect_to(:action => 'adminhome')
 
       # if authorized_user.is_admin
       #   session[:is_admin] = true
@@ -53,7 +53,13 @@ class HomeController < ApplicationController
 
   # user home page section
 
+  
+
   def userhome
+
+  end
+
+  def adminhome
 
   end
 

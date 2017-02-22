@@ -1,14 +1,16 @@
 Rails.application.routes.draw do
   get 'accounts/index'
-
+  get 'admins/index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
 #  get 'home/index'
 #  root 'home#index'
+  resources :admins, only: [:index, :edit, :view, :show] do
+    get :adminsindex ,on: :collection
+  end
 
  #get '/about' => 'home#about'
   resources :users
-  resources :admins
   resources :transactions
   resources :accounts
 
@@ -21,11 +23,16 @@ Rails.application.routes.draw do
   get "logout", :to => "home#logout"
 
   get "index", :to => "home#index"
-  get "userhome", :to => "home#userhome"
+  get "adminhome", :to => "home#adminhome"
   get "home", :to => "home#userhome"
 
   get "accounts", :to => "accounts#index"
+  get "admins", :to => "admins#index"
+  get "accountsrequest", :to=> "accounts#accountrequest"
+  get "userslist", :to => "users#userslist"
+  get "admins", :to => "admins#show"
 
+  get "transactionslist", :to => "transactions#transactionslist"
   # post '/questions' => 'home#temp'
   # post '/answers' => 'home#temp'
   #

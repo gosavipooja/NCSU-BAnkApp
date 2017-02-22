@@ -1,0 +1,52 @@
+<% content_for :title, "Home" %>
+<!--<h1>User Home Page</h1>-->
+<!-- Put Navigation stuff below-->
+<!-- Page content goes below-->
+
+<div class="container" style="background: #f9f9f9; border-radius: 1px; min-height: 600px; max-width: 1200px; ">
+
+  <div class="row">
+    <div class="col-md-2"><!--needs attention-->
+      <ul class="nav nav-pills nav-stacked">
+        <li class="active"><a href="/home/adminhome.html.erb">Home</a></li>
+        <li><a href="/users">List of Transactions</a></li>
+        <li><a href="/settings">Users List</a></li>
+        <li><a href="/accounts">Accounts List</a></li>
+        <li><a href="/accountsrequest">New Account Request</a></li>
+        <li><a href="/admins/<%=session[:user_id]%>/transviews">Admin Details</a></li>
+        <li><a href="/admins/<%=session[:user_id]%>/edit">Edit My Profile</a></li>
+        <li><a href=/logout>Log out</a></li>
+      </ul>
+    </div>
+    <div class="col-md-10">
+      <div class="row">
+        <div class="col-md-4">
+          <img src="/assets/logo.png" style="padding: 5px; margin-left: 30px; margin-top: 10px; max-height: 100px; max-width: 100px"/>
+          <legend>Welcome back, Admin</legend>
+        </div>
+        <div class="col-md-6">
+          <div style="margin-left: 10px; margin-top: 20px">
+            <label for="select" class="control-label">Serach for User</label>
+            <!--TODO: Get list of accounts from DB and populate below-->
+            <select class="form-control" id="select" name = "session[size]">
+              <option value="">---</option>
+              <option value="4">8966562780</option>
+              <option value="6">8966562781</option>
+              <option value="12">8966562782</option>
+            </select>
+          </div>
+          <div style="margin-left: 10px; margin-top: 20px">
+            <label for="select" class="control-label"></label>
+            <!--TODO: Get Balance of accounts from DB and populate below-->
+          </div>
+        </div>
+
+      </div>
+      <label for="select" class="control-label">List of users</label>
+      <div class="jumbotron" style="background: #dfe3ee;">
+        <!--TODO: Table containing a list of previous transactions come here-->
+      </div>
+    </div>
+
+  </div>
+</div>
