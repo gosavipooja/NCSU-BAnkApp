@@ -5,9 +5,14 @@ class AccountCreationRequest < ApplicationRecord
 
   before_save :default_values
 
+  # def initialize(email)
+  #   @email = email
+  #   @status = "pending"
+  # end
+
   def default_values
     if !status
-      status = "pending"
+      @status = "pending"
     end
     true
   end

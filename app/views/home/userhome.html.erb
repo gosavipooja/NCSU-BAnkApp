@@ -34,17 +34,23 @@
                 </div></div>
           <% end %>
           <% flash.clear %>
+          <a href="/accountsrequest" class="btn btn-primary btn-sm" style="background-color: #73E9EA">Request new account</a>
           <br/>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-5">
           <div style="margin-left: 10px; margin-top: 20px">
             <label for="select" class="control-label">Select Account</label>
             <!--TODO: Get list of accounts from DB and populate below-->
             <select class="form-control" id="select" name = "session[size]">
               <option value="">---</option>
-              <option value="4">8966562780</option>
-              <option value="6">8966562781</option>
-              <option value="12">8966562782</option>
+              <% @accounts.each do |account| %>
+                  <% if session[:email] == account.email %>
+                      <option><%= account.account_number %></option>
+                  <% end %>
+              <% end %>
+              <!--<option value="4">8966562780</option>-->
+              <!--<option value="6">8966562781</option>-->
+              <!--<option value="12">8966562782</option>-->
             </select>
           </div>
           <div style="margin-left: 10px; margin-top: 20px">

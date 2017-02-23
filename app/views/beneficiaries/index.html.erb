@@ -11,8 +11,8 @@
       <div class="col-md-4" style=" margin-left: 30px">
         <img src="/assets/logo.png" style="padding: 5px; margin-top: 10px; max-height: 100px; max-width: 100px"/>
         <legend>Manage your beneficiaries list here</legend>
-        <!-- TODO: add button to request for adding new account-->
-        <a href="/beneficiaries/add" class="btn btn-primary btn-sm" style="background-color: #73E9EA">Add</a>
+        <!-- TODO: new button to request for adding new account-->
+        <a href="/beneficiaries/new" class="btn btn-primary btn-sm" style="background-color: #73E9EA">Add</a>
       </div>
     </div>
     <br/>
@@ -32,7 +32,7 @@
                 <tr>
                   <td><%= beneficiary.nickname %></td>
                   <td><%= beneficiary.account %></td>
-                  <td><a href="<%= beneficiary.id %>" style="color:#DB0000;" data-method="delete" rel="nofollow"> <i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                  <td><a href="/beneficiaries/<%= beneficiary.id %>" style="color:#DB0000;" data-method="delete" rel="nofollow"> <i class="fa fa-trash" aria-hidden="true"></i></a></td>
                 </tr>
             <% end %>
         <% end %>

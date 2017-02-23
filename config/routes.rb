@@ -31,22 +31,27 @@ Rails.application.routes.draw do
   get "home", :to => "home#userhome"
 
   get "accounts", :to => "accounts#index"
+  get "accountsrequest", :to => "home#newaccountrequest"
   get "beneficiaries", :to => "beneficiaries#index"
-  get "beneficiaries/add", :to => "beneficiaries#add"
-  post "beneficiaries" => "beneficiaries#create"
-  delete "beneficiaries/:id" => "beneficiaries#destroy"
+  get "beneficiaries/new", :to => "beneficiaries#new"
+  post "beneficiaries", :to => "beneficiaries#create"
+  delete "beneficiaries/:id", :to => "beneficiaries#destroy"
   # get "delete", :to => "beneficiaries#destroy"
   # get "deletebeneficiary", :to => "beneficiaries#delete"
   # post "deletebeneficiary", :to => "beneficiaries#delete"
 
   #delete "beneficiaries" => "beneficiaries#destroy"
-  # resources :beneficiaries, :only => [:add, :create]
-  #match '/beneficiaries' => 'beneficiaries#add', :via => :post
+  # resources :beneficiaries, :only => [:new, :create]
+  #match '/beneficiaries' => 'beneficiaries#new', :via => :post
   # resources :beneficiaries do
   #   collection do
   #     get 'showall'
   #   end
   # end
+
+
+  #get "accounts/request" , :to => "accounts#request"
+
 
   get "transfers", :to => "transfers#index"
   get "usersettings", :to => "users#settings"

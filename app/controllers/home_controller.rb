@@ -21,6 +21,21 @@ class HomeController < ApplicationController
     render "login"
   end
 
+  def newaccountrequest
+    @newrequest = AccountCreationRequest.new()
+    @newrequest.email = session[:email]
+    @newrequest.status = "pending"
+    if @newrequest.save
+      flash[:notice]="New request initiated"
+      render 'userhome'
+      puts "Save Successful"
+    else
+      flash[:notice]="Problem creating new accounts creation request"
+      render 'userhome'
+    end
+
+  end
+
 #######this section requires attention
   def login_attempt
     authorized_user = User.authenticate(params[:user][:email], params[:user][:password])
@@ -54,7 +69,11 @@ class HomeController < ApplicationController
   # user home page section
 
   def userhome
+    @accounts = Account.all
+  end
 
+  def request_params
+    params.require(:account_creation_request).permit(:email, :status )
   end
 
 
