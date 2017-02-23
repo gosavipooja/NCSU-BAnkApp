@@ -9,3 +9,7 @@
 Admin.create!(name: "admin", email: "admin@ncsu.edu", password_field: "admin", is_pre_admin: true)
 Admin.create!(name: "user", email: "user@ncsu.edu", password_field: "password", is_pre_admin: true)
 Account.create!(email: "sunil@sunil.com", account_number: 900000000, balance: 100, account_status: true)
+Account.create!(email: "sunil@sunil.com", account_number: 900000001, balance: 100, account_status: true)
+Account.create!(email: "abhi@abhi.com", account_number: 900000002, balance: 200, account_status: true)
+Account.create!(email: "abhi@abhi.com", account_number: 900000003, balance: 300, account_status: true)
+Beneficiary.create!(email: "abhi@abhi.com", account: 900000002, nickname: "abhilash")
