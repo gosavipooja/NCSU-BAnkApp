@@ -1,7 +1,7 @@
 require 'digest/sha1'
 
 class UsersController < ApplicationController
-  before_action :set_member, only: [:show, :edit, :update, :destroy]
+  before_action :user_param, only: [:show, :edit, :update, :destroy]
 
   def index
     @users = User.all

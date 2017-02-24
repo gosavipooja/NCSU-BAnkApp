@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   resources :users
   resources :transactions
   resources :accounts
+#  resources :admins
 
   root :to => "home#login"
 
@@ -60,23 +61,8 @@ Rails.application.routes.draw do
   post "home", :to => "home#create"
 
   delete "beneficiaries/:id", :to => "beneficiaries#destroy"
-  # get "delete", :to => "beneficiaries#destroy"
-  # get "deletebeneficiary", :to => "beneficiaries#delete"
-  # post "deletebeneficiary", :to => "beneficiaries#delete"
 
   get "onaccountselection", :to => "transactions#onaccountselection"
-
-  #delete "beneficiaries" => "beneficiaries#destroy"
-  # resources :beneficiaries, :only => [:new, :create]
-  #match '/beneficiaries' => 'beneficiaries#new', :via => :post
-  # resources :beneficiaries do
-  #   collection do
-  #     get 'showall'
-  #   end
-  # end
-
-
-  #get "accounts/request" , :to => "accounts#request"
 
 
   get "transfers", :to => "transfers#index"
@@ -88,6 +74,9 @@ Rails.application.routes.draw do
   post "update", :to => "users#updateprofile"
 
   post "updateprofile", :to => "admins#updateprofile"
+  get "newadmin", :to => "admins#new"
+  get "admins", :to => "admins#create"
+  post "admins", :to => "admins#create"
 
 
 end

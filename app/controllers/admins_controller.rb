@@ -1,7 +1,7 @@
 require 'digest/sha1'
 
 class AdminsController < ApplicationController
-  before_action :set_member, only: [:show, :edit, :update, :destroy]
+  before_action :set_admin, only: [:show, :edit, :update, :destroy]
 
 
   def index
@@ -14,10 +14,10 @@ class AdminsController < ApplicationController
     #   redirect_to :action => :index
     # else
       if @admin.save
-        redirect_to :controller => 'home', :action => 'login'
+        redirect_to :controller => 'home', :action => 'adminhome'
       else
         flash[:notice]="Please enter valid email id or password"
-        redirect_to :action => :index
+        redirect_to :controller => 'admins', :action => 'create'
       end
   end
   
@@ -63,7 +63,7 @@ class AdminsController < ApplicationController
       @admins = Admin.find_by_sql(["select * from admins"])  
     else
       redirect_to :action => "login", :controller => "sessions"
-end
+    end
   end
 
 
@@ -111,14 +111,11 @@ end
   end
 
   def admin_param
-    params.require(:admin).permit(:name, :email, :password_field, :address)
+    params.require(:admin).permit(:name, :email, :password_field, :is_pre_admin)
   end
 
   private
 
-  def set_member
-    @admin = Admin.find(params[:id])
-  end
 
 
 end
