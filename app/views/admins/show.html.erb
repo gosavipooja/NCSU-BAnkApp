@@ -7,7 +7,16 @@
 
   <div class="row">
     <div class="col-md-2"><!--needs attention-->
-      
+      <ul class="nav nav-pills nav-stacked">
+        <li><a href="/adminhome">Home</a></li>
+        <li><a href="/transactionslist">List of Transactions</a></li>
+        <li><a href="/userslist">Users List</a></li>
+        <li><a href="/accounts">Accounts List</a></li>
+        <li><a href="/accountsrequest">New Account Request</a></li>
+        <li class="active"><a href="/admins/<%=session[:user_id]%>">Admin Details</a></li>
+        <li><a href="/admins/<%=session[:user_id]%>/edit">Edit My Profile</a></li>
+        <li><a href=/logout>Log out</a></li>
+      </ul>
     </div>
     <div class="col-md-10">
       <div class="row">
@@ -21,39 +30,35 @@
       <br></br>
 
       <div class="row">
-    <div class="col-md-8">
-      <!--<a href="createadmin" class="btn btn-primary btn-sm">Create</a>-->
-
-      <label for="select" class="control-label">List of admins</label>
-      <table class="table table-striped table-hover "><thead>
-      <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Delete</th>
-      </tr>
-      </thead><tbody>
-      <% @admins.each do |admin| %>
-      <% if session[:user_id] != admin.id && admin.email != "admin@ncsu.edu" %>
+        <div class="col-md-8">
+          <label for="select" class="control-label">List of admins</label>
+          <table class="table table-striped table-hover "><thead>
           <tr>
-            <td><%= admin.name %></td>
-            <td><%= admin.email %></td>
-            <td>
-              <a href="<%= admin_path(@admin) %>" style="color:#222;" data-confirm="Are you sure?" data-method="destroy" rel="nofollow">
-                <i class="fa fa-trash" aria-hidden="true"></i></a></td> <% end %>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Delete</th>
           </tr>
-      <% end %>
-      <tr>
-      </tr>
-      <tr>
-      </tr>
-      </tbody>
-      </table>
-      <i class="icon-edit"></i>
-</div>
-        <!--TODO: Table containing a list of previous transactions come here-->
+          </thead><tbody>
+          <% @admins.each do |admin| %>
+              <% if session[:user_id] != admin.id && admin.email != "admin@ncsu.edu" %>
+                  <tr>
+                    <td><%= admin.name %></td>
+                    <td><%= admin.email %></td>
+                    <% if !admin.is_pre_admin %>
+                        <td>
+                          <a href="<%= admin_path(@admin) %>" style="color:#222;" data-confirm="Are you sure?" data-method="destroy" rel="nofollow">
+                            <i class="fa fa-trash" aria-hidden="true"></i></a>
+                        </td>
+                    <%else%>
+                        <td></td>
+                    <% end %>
+                  </tr>
+              <% end %>
+          <% end %>
+          </tbody>
+          </table>
+        </div>
       </div>
-
-
-  </div>
+    </div>
   </div>
 </div>

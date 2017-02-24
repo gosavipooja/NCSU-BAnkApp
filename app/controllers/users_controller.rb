@@ -1,10 +1,14 @@
-require 'digest/sha1'
 
 class UsersController < ApplicationController
   before_action :user_param, only: [:show, :edit, :update, :destroy]
 
   def index
     @users = User.all
+  end
+
+  def userslist
+    @users = User.all
+    render 'userslist'
   end
 
   def create
@@ -69,7 +73,7 @@ end
 
   def show_user
     if session[:user_id]
-      @users = User.where("is_admin = true")
+      @users = User.all
     else
       redirect_to :action => "login", :controller => "home"
     end
