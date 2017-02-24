@@ -36,7 +36,7 @@ Rails.application.routes.draw do
 
   get "index", :to => "home#index"
   get "adminhome", :to => "home#adminhome"
-  get "home", :to => "home#userhome"
+  get "userhome", :to => "home#userhome"
   get "go", :to => "home#go"
 
   get "accounts", :to => "accounts#index"
