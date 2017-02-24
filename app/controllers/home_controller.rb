@@ -16,6 +16,7 @@ class HomeController < ApplicationController
     session[:user_id] = nil
     session[:name] = nil
     session[:email] = nil
+    session[:is_admin] = nil
     flash[:notice] = "Log out successful"
     render "login"
   end
@@ -35,29 +36,40 @@ class HomeController < ApplicationController
 
   end
 
-#######this section requires attention
+
   def login_attempt
-    authorized_user = Admin.authenticate(params[:user][:email], params[:user][:password])
     if session[:user_id]
-      redirect_to(:action => 'adminhome')
-    #end
-    elsif authorized_user
-      session[:user_id] = authorized_user.id
-      session[:name] = authorized_user.name
-      session[:email] = authorized_user.email
+      if session[:is_admin]
+        redirect_to(:action => 'adminhome')
+      else
+        redirect_to(:action => 'userhome')
+      end
 
-      # find a way to differentiate between admin and user and login to appropriate page
-      redirect_to(:action => 'adminhome')
-
-      # if authorized_user.is_admin
-      #   session[:is_admin] = true
-      #   redirect_to(:action => 'userhome')
-      # else
-      #   redirect_to(:action => 'userhome')
-      # end
     else
-      flash[:notice] = "Invalid Username or Password"
-      render "login"
+      authorized_user = Admin.authenticate(params[:user][:email], params[:user][:password])
+
+      if authorized_user
+        #admin login
+        session[:user_id] = authorized_user.id
+        session[:name] = authorized_user.name
+        session[:email] = authorized_user.email
+        session[:is_admin] = true
+        redirect_to(:action => 'adminhome')
+
+      else
+        #user login
+        authorized_user = User.authenticate(params[:user][:email], params[:user][:password])
+        if authorized_user
+          session[:user_id] = authorized_user.id
+          session[:name] = authorized_user.name
+          session[:email] = authorized_user.email
+          session[:is_admin] = false
+          redirect_to(:action => 'userhome')
+        else
+          flash[:notice] = "Invalid Username or Password"
+          render "login"
+        end
+      end
     end
   end
 

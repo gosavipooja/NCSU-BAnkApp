@@ -78,8 +78,9 @@
         </tr>
         </thead>
           <tbody>
-
+          <% if @transfer%>
             <% @transfers.each do |transfer| %>
+              <% if transfer %>
                   <tr>
                     <td><%= transfer.type%></td>
                     <td><%= transfer.person %></td>
@@ -89,6 +90,8 @@
                     <td><%= transfer.status%></td>
                     <td><%= transfer.balance%></td>
                   </tr>
+              <% end %>
+              <% end %>
             <% end %>
           <tr>
           </tr>
