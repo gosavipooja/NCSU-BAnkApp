@@ -16,7 +16,7 @@ class Transaction < ApplicationRecord
 
   def default_values
     if !transaction_status
-      transaction_status = "pending"
+      transaction_status = "Pending"
     end
     true
   end

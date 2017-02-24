@@ -6,6 +6,7 @@ class TransactionsController < ApplicationController
   end
 
   def transactionslist
+    @trans = Transaction.all
     render "transactionslist"
   end
 
