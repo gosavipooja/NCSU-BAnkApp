@@ -23,7 +23,7 @@ Rails.application.routes.draw do
  #get '/about' => 'home#about'
   resources :users
   resources :transactions
-  resources :accounts
+#  resources :accounts
 #  resources :admins
 
   root :to => "home#login"
@@ -42,7 +42,13 @@ Rails.application.routes.draw do
   get "accounts", :to => "accounts#index"
 
   get "admins", :to => "admins#index"
+  get "useraccountsrequest", :to => "home#useraccountrequest"
   get "accountsrequest", :to=> "accounts#accountrequest"
+  get "accounts/create/:id", :to=> "accounts#create"
+  get "accounts/delete/:id", :to=> "accounts#destroy"
+  #post "accounts/:id", :to => "accounts#create"
+  #delete "accounts/:id", :to => "accounts#destroy"
+
   get "userslist", :to => "users#userslist"
   get "admins", :to => "admins#show"
 
@@ -52,7 +58,7 @@ Rails.application.routes.draw do
   #
   # get '/questions/:id' => 'home#question'
 
-  get "accountsrequest", :to => "home#newaccountrequest"
+  #get "accountsrequest", :to => "home#newaccountrequest"
   get "beneficiaries", :to => "beneficiaries#index"
   get "beneficiaries/new", :to => "beneficiaries#new"
   post "beneficiaries", :to => "beneficiaries#create"

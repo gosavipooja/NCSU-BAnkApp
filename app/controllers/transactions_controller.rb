@@ -29,7 +29,14 @@ class TransactionsController < ApplicationController
     flag = true
 
     if transaction_type != "Deposit"
-      if amount <= Account.find_by_account_number(debited_acc_number).balance
+      account =  Account.find_by_account_number(debited_acc_number)
+      balance = 0
+      if account && account.balance
+        balance = account.balance
+      else
+        balance = 0
+      end
+      if amount <= balance
         if transaction_type == "Withdraw" && amount > 1000
           @transaction.transaction_status = "Pending"
         else
@@ -51,8 +58,17 @@ class TransactionsController < ApplicationController
         if(transaction_type == "Transfer")
           debited_acc = Account.find_by_account_number(debited_acc_number)
           credited_acc = Account.find_by_account_number(credited_acc_number)
-          credited_acc.balance = credited_acc.balance + amount
-          debited_acc.balance = debited_acc.balance - amount
+          if credited_acc.balance
+            credited_acc.balance = credited_acc.balance + amount
+          else
+            credited_acc.balance = amount
+          end
+          if debited_acc.balance
+            debited_acc.balance = debited_acc.balance - amount
+          else
+            debited_acc.balance = 0 - amount
+          end
+
           if debited_acc.save && credited_acc.save
             puts "Transaction completed"
           else
@@ -61,7 +77,11 @@ class TransactionsController < ApplicationController
         elsif(transaction_type == "Withdraw")
           if(amount < 1000)
             debited_acc = Account.find_by_account_number(debited_acc_number)
-            debited_acc.balance = debited_acc.balance - amount
+            if debited_acc.balance
+              debited_acc.balance = debited_acc.balance - amount
+            else
+              debited_acc.balance = 0 - amount
+            end
             if debited_acc.save
               puts "Transaction completed"
             else
@@ -75,8 +95,13 @@ class TransactionsController < ApplicationController
 
         else
           debited_acc = Account.find_by_account_number(debited_acc_number)
-          debited_acc.balance = debited_acc.balance + amount
+          if debited_acc.balance
+            debited_acc.balance = debited_acc.balance + amount
+          else
+            debited_acc.balance = amount
+          end
           if debited_acc.save
+
             puts "Transaction completed"
           else
             puts "Trouble completing transaction"

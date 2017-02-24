@@ -3,8 +3,6 @@
 
 <!-- Put Navigation stuff below-->
 
-
-
 <!-- Page content goes below-->
 
 <div class="container" style="background: #f9f9f9; border-radius: 1px; min-height: 600px; max-width: 1200px; ">
@@ -14,46 +12,40 @@
       <div class="row">
         <div class="col-md-4">
           <img src="/assets/logo.png" style="padding: 5px; margin-left: 30px; margin-top: 10px; max-height: 100px; max-width: 100px"/>
-          <legend>Welcome back, Admin</legend>
+          <legend>Approve new requests here</legend>
         </div>
-        <div class="col-md-6">
-          <div style="margin-left: 10px; margin-top: 20px">
-            <label for="select" class="control-label">Select Account</label>
-            <!--TODO: Get list of accounts from DB and populate below-->
-            <select class="form-control" id="select" name = "session[size]">
-              <option value="">---</option>
-              <option value="4">8966562780</option>
-              <option value="6">8966562781</option>
-              <option value="12">8966562782</option>
-            </select>
-          </div>
-          <div style="margin-left: 10px; margin-top: 20px">
-            <label for="select" class="control-label"></label>
-            <!--TODO: Get Balance of accounts from DB and populate below-->
-          </div>
-        </div>
-
       </div>
 
-      <label for="select" class="control-label">Create Accounts</label>
-      <div class="jumbotron" style="background: #dfe3ee;">
-        <!--TODO: Table containing a list of previous transactions come here-->
-        <div class="form-group">
-
-          <label for="" class="col-lg-2 control-label">Account Number</label>
-          <div class="col-lg-4">
-            <input type="text" name="" class="form-control" id="" placeholder="Account Number">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="" class="col-lg-2 control-label">Email Id</label>
-          <div class="col-lg-4">
-            <input type="text" name="" class="form-control" id="" placeholder="email@email.com">
-          </div>
-
-        </div>
-
-    </div>
+      <label for="select" class="control-label">New requests</label>
+      <table class="table table-striped table-hover "><thead>
+      <tr>
+        <th>Requestor's Email</th>
+        <th>Status</th>
+        <th>Approve</th>
+        <th>Cancel</th>
+      </tr>
+      </thead>
+        <tbody>
+        <% if @accountcreationrequests%>
+          <% @accountcreationrequests.each do |request| %>
+            <% if true %>
+                <tr>
+                  <td><%= request.email%></td>
+                  <td><%= request.status%></td>
+                  <% if request.status == "Pending"%>
+                    <td><a href="/accounts/create/<%= request.id %>" style="color:#00FF00;" data-method="post" rel="nofollow"> <i class="fa fa-check" aria-hidden="true"></i></a></td>
+                    <td><a href="/accounts/delete/<%= request.id %>" style="color:#FF0000;" data-method="delete" rel="nofollow"> <i class="fa fa-times" aria-hidden="true"></i></a></td>
+                  <%end%>
+                </tr>
+            <% end %>
+          <% end %>
+        <% end %>
+        <tr>
+        </tr>
+        <tr>
+        </tr>
+        </tbody>
+      </table>
   </div>
   </div>
 </div>

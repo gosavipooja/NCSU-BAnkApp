@@ -112,6 +112,18 @@ class HomeController < ApplicationController
     #redirect_to :action => 'userhome'
   end
 
+  def useraccountrequest
+    @newrequest = AccountCreationRequest.new
+    @newrequest.status = "Pending"
+    @newrequest.email = session[:email]
+    if @newrequest.save
+      flash[:notice] = "New request made"
+    else
+      flash[:notice] = "Request failed"
+    end
+    redirect_to :action => 'userhome'
+  end
+
   def populate_transfers
     trs = Transaction.all
     @transfers = Array.new
