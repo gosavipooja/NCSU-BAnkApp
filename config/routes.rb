@@ -87,5 +87,7 @@ Rails.application.routes.draw do
 
   post "update", :to => "users#updateprofile"
 
+  post "updateprofile", :to => "admins#updateprofile"
+
 
 end

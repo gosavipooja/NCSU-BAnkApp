@@ -3,6 +3,7 @@ require 'digest/sha1'
 class AdminsController < ApplicationController
   before_action :set_member, only: [:show, :edit, :update, :destroy]
 
+
   def index
     @admins = Admin.all
   end
@@ -74,6 +75,29 @@ end
     end
   end
 
+  def updateprofile
+    @admin = Admin.authenticate(params[:admin][:email], params[:admin][:old_password_field])
+
+    if (@admin.id != session[:user_id])
+      flash[:notice]="Invalid email id entered"
+      redirect_to :controller => 'admins', :action => 'edit'
+      return
+    end
+
+    if (@admin)
+      if @admin.update(admin_param)
+        flash[:notice]="Profile updated"
+        redirect_to :controller => 'home', :action => 'adminhome'
+      else
+        flash[:notice]="Please enter valid password"
+        redirect_to :controller => 'admins', :action => 'edit'
+      end
+    else
+      flash[:notice]="Please enter valid email id and password"
+      redirect_to :controller => 'admins', :action => 'edit'
+    end
+  end
+
   def destroy
         @admin = Admin.find(params[:id])
 #        is_admin = @member.is_admin
@@ -95,4 +119,6 @@ end
   def set_member
     @admin = Admin.find(params[:id])
   end
+
+
 end
