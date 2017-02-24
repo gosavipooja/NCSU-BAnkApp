@@ -13,9 +13,9 @@
     <div class="col-md-2"><!--needs attention-->
       <ul class="nav nav-pills nav-stacked">
         <li class="active"><a href="/home">Home</a></li>
-        <li><a href="/transfers">Make a transfer</a></li>
+        <li><a href="/transactions">Make a transfer</a></li>
         <li><a href="/beneficiaries">Manage Beneficiaries</a></li>
-        <li><a href="/accounts">Manage accounts</a></li>
+        <!--<li><a href="/accounts">Manage accounts</a></li>-->
         <li><a href="/usersettings">Settings</a></li>
         <li><a href=/logout>Log out</a></li>
       </ul>
@@ -24,7 +24,7 @@
       <div class="row">
         <div class="col-md-4">
           <img src="/assets/logo.png" style="padding: 5px; margin-left: 30px; margin-top: 10px; max-height: 100px; max-width: 100px"/>
-          <legend>Welcome back, Sunil</legend>
+          <legend>Welcome back, <%= session[:name]%></legend>
           <% flash.each do |key, value| %>
               <div class="col-md-10 col-sm-12 p-a-3">
                 <div class="row omb_row-sm-offset-3 no-gutter m-a-3">
@@ -41,16 +41,13 @@
           <div style="margin-left: 10px; margin-top: 20px">
             <label for="select" class="control-label">Select Account</label>
             <!--TODO: Get list of accounts from DB and populate below-->
-            <select class="form-control" id="select" name = "session[size]">
+            <select class="form-control" id="select" name = "session[amount]">
               <option value="">---</option>
               <% @accounts.each do |account| %>
                   <% if session[:email] == account.email %>
                       <option><%= account.account_number %></option>
                   <% end %>
               <% end %>
-              <!--<option value="4">8966562780</option>-->
-              <!--<option value="6">8966562781</option>-->
-              <!--<option value="12">8966562782</option>-->
             </select>
           </div>
           <div style="margin-left: 10px; margin-top: 20px">

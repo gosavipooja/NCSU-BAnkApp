@@ -6,7 +6,6 @@ class HomeController < ApplicationController
   end
 
   def login
-    #Login Form
     if session[:user_id]
       redirect_to(:action => 'userhome')
     end
@@ -16,8 +15,7 @@ class HomeController < ApplicationController
     session[:user_id] = nil
     session[:name] = nil
     session[:email] = nil
-    flash[:notice] = "You have been successfully logged out"
-    # redirect_to(:action => 'login')
+    flash[:notice] = "Log out successful"
     render "login"
   end
 
@@ -26,7 +24,7 @@ class HomeController < ApplicationController
     @newrequest.email = session[:email]
     @newrequest.status = "pending"
     if @newrequest.save
-      flash[:notice]="New request initiated"
+      flash[:notice]="New account request initiated"
       render 'userhome'
       puts "Save Successful"
     else

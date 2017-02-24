@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'transactions/index'
+
+  get 'transaction/index'
+
   get 'beneficiary/index'
 
   get 'beneficiaries/index'
@@ -35,10 +39,15 @@ Rails.application.routes.draw do
   get "beneficiaries", :to => "beneficiaries#index"
   get "beneficiaries/new", :to => "beneficiaries#new"
   post "beneficiaries", :to => "beneficiaries#create"
+
+  post "transactions", :to => "transactions#create"
+
   delete "beneficiaries/:id", :to => "beneficiaries#destroy"
   # get "delete", :to => "beneficiaries#destroy"
   # get "deletebeneficiary", :to => "beneficiaries#delete"
   # post "deletebeneficiary", :to => "beneficiaries#delete"
+
+  get "onaccountselection", :to => "transactions#onaccountselection"
 
   #delete "beneficiaries" => "beneficiaries#destroy"
   # resources :beneficiaries, :only => [:new, :create]
@@ -54,6 +63,7 @@ Rails.application.routes.draw do
 
 
   get "transfers", :to => "transfers#index"
+  get "transfers", :to => "transactions#index"
   get "usersettings", :to => "users#settings"
   get "usersprofile", :to => "users#profile"
   #get "settings", :to => "users#settings"
