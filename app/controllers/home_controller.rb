@@ -7,8 +7,12 @@ class HomeController < ApplicationController
 
   def login
     if session[:user_id]
-      redirect_to(:action => 'adminhome')
- #     redirect_to(:action => 'userhome')
+
+      if session[:is_admin]
+        redirect_to(:action => 'adminhome')
+      else
+        redirect_to(:action => 'userhome')
+      end
     end
   end
 
