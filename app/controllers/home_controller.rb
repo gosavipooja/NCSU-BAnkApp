@@ -8,6 +8,7 @@ class HomeController < ApplicationController
   def login
     if session[:user_id]
       redirect_to(:action => 'userhome')
+      #redirect_to(:action => 'userhome')
     end
   end
 
@@ -68,14 +69,66 @@ class HomeController < ApplicationController
 
   def userhome
     @accounts = Account.all
+    @accounts.each do |acc|
+      if session[:email] == acc.email
+        session[:selected_acc_number] = acc
+        break
+      end
+    end
+
+    if session[:selected_acc_number]
+      populate_transfers
+
+      #redirect_to :action => 'userhome'
+    end
+    #newaccountrequest
   end
 
   def request_params
     params.require(:account_creation_request).permit(:email, :status )
   end
 
+  def create
+    session[:selected_acc_number] = params[:account].to_i
+    populate_transfers
+    #redirect_to :action => 'userhome'
+  end
 
-  # def session_params
+  def populate_transfers
+    trs = Transaction.all
+    @transfers = Array.new
+    trs.each do |transaction|
+        if session[:selected_acc_number] == transaction.credited_acc_number || session[:selected_acc_number] == transaction.debited_acc_number
+
+          transfer = Transfer.new
+          transfer.setstuff(session[:selected_acc_number],
+                                transaction.transaction_type,
+                                transaction.transaction_status,
+                                transaction.credited_acc_number,
+                                transaction.debited_acc_number,
+                                transaction.amount,
+                                0)       #balance= 0
+          puts transfer.debited_amount
+          @transfers.push transfer
+        end
+    end
+    puts @transfers.length
+    # transactions.each do |transaction|
+    #   if session[:selected_acc_number] == transaction.credited_acc_number || session[:selected_acc_number] == transaction.debited_acc_number
+    #      transfer = Transfer.new(session[:selected_acc_number],
+    #                              transaction.transaction_type,
+    #                              transaction.transaction_status,
+    #                              transaction.credited_acc_number,
+    #                              transaction.debited_acc_number,
+    #                              transaction.amount,
+    #                              0)       #balance= 0
+    #      @transfers.push(transfer)
+    #     puts transfer
+    #   end
+    # end
+    # def session_params
   #   params.require(:session).permit(:date, :size, :building, :time)
-  # end
+
+    #render json: @transfers
+  end
 end

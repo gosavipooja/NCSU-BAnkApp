@@ -33,6 +33,7 @@ Rails.application.routes.draw do
   get "index", :to => "home#index"
   get "userhome", :to => "home#userhome"
   get "home", :to => "home#userhome"
+  get "go", :to => "home#go"
 
   get "accounts", :to => "accounts#index"
   get "accountsrequest", :to => "home#newaccountrequest"
@@ -41,6 +42,7 @@ Rails.application.routes.draw do
   post "beneficiaries", :to => "beneficiaries#create"
 
   post "transactions", :to => "transactions#create"
+  post "home", :to => "home#create"
 
   delete "beneficiaries/:id", :to => "beneficiaries#destroy"
   # get "delete", :to => "beneficiaries#destroy"

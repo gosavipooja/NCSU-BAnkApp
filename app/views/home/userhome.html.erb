@@ -15,7 +15,6 @@
         <li class="active"><a href="/home">Home</a></li>
         <li><a href="/transactions">Make a transfer</a></li>
         <li><a href="/beneficiaries">Manage Beneficiaries</a></li>
-        <!--<li><a href="/accounts">Manage accounts</a></li>-->
         <li><a href="/usersettings">Settings</a></li>
         <li><a href=/logout>Log out</a></li>
       </ul>
@@ -38,17 +37,24 @@
           <br/>
         </div>
         <div class="col-md-5">
-          <div style="margin-left: 10px; margin-top: 20px">
+          <%= form_tag({:controller=> 'home', :action => :create, :method => :post}, {:class => 'form-horizontal'})%>
+          <div class="form-group" style="margin-left: 10px; margin-top: 20px">
             <label for="select" class="control-label">Select Account</label>
             <!--TODO: Get list of accounts from DB and populate below-->
-            <select class="form-control" id="select" name = "session[amount]">
-              <option value="">---</option>
+            <select class="form-control" id="select" name = "account">
+              <!--<option value="">-&#45;&#45;</option>-->
               <% @accounts.each do |account| %>
                   <% if session[:email] == account.email %>
                       <option><%= account.account_number %></option>
                   <% end %>
               <% end %>
             </select>
+          </div>
+          <div class="form-group col-md-4">
+            <div class="col-lg-10 col-lg-offset-2">
+              <!--<button type="reset" class="btn btn-default">Reset</button>-->
+              <button type="submit" class="btn btn-primary">Go</button>
+            </div>
           </div>
           <div style="margin-left: 10px; margin-top: 20px">
             <label for="select" class="control-label">Account Balance: $0</label>
@@ -59,6 +65,37 @@
       </div>
       <label for="select" class="control-label">List of transactions</label>
       <div class="jumbotron" style="background: #dfe3ee;">
+        <table class="table table-striped table-hover "><thead>
+        <tr>
+          <th>Transfer Type</th>
+          <th>Person</th>
+          <th>Account Number</th>
+          <th>Credited Amount</th>
+          <th>Debited Amount</th>
+          <th>Transfer Status</th>
+          <th>Balance</th>
+          <!--<th>Delete</th>-->
+        </tr>
+        </thead>
+          <tbody>
+
+            <% @transfers.each do |transfer| %>
+                  <tr>
+                    <td><%= transfer.type%></td>
+                    <td><%= transfer.person %></td>
+                    <td><%= transfer.other_acc_number%></td>
+                    <td><%= transfer.credited_amount %></td>
+                    <td><%= transfer.debited_amount%></td>
+                    <td><%= transfer.status%></td>
+                    <td><%= transfer.balance%></td>
+                  </tr>
+            <% end %>
+          <tr>
+          </tr>
+          <tr>
+          </tr>
+          </tbody>
+        </table>
         <!--TODO: Table containing a list of previous transactions come here-->
       </div>
     </div>
