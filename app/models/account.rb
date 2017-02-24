@@ -14,4 +14,16 @@ class Account < ApplicationRecord
     end
     true
   end
+
+  def self.match(email="", number=0)
+    #account = Account.find_by_sql(["select * from Accounts where account_number = :id ", {:id => number}])
+    #email == account.email
+    account = Account.find_by_account_number(number)
+    if account
+      email == account.email
+    else
+      return false
+    end
+  end
+
 end

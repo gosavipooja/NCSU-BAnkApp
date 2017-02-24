@@ -13,11 +13,9 @@
     <div class="col-md-2"><!--needs attention-->
       <ul class="nav nav-pills nav-stacked">
         <li class="active"><a href="/home">Home</a></li>
-        <li><a href="/settings">Make a transfer</a></li>
-        <li><a href="/rooms">Manage Beneficiaries</a></li>
-        <li><a href="/accounts">Manage accounts</a></li>
-        <li><a href="/users/<%=session[:user_id]%>">My Profile</a></li>
-        <li><a href="/rooms">Change password</a></li>
+        <li><a href="/transactions">Make a transfer</a></li>
+        <li><a href="/beneficiaries">Manage Beneficiaries</a></li>
+        <li><a href="/usersettings">Settings</a></li>
         <li><a href=/logout>Log out</a></li>
       </ul>
     </div>
@@ -25,18 +23,38 @@
       <div class="row">
         <div class="col-md-4">
           <img src="/assets/logo.png" style="padding: 5px; margin-left: 30px; margin-top: 10px; max-height: 100px; max-width: 100px"/>
-          <legend>Welcome back, Sunil</legend>
+          <legend>Welcome back, <%= session[:name]%></legend>
+          <% flash.each do |key, value| %>
+              <div class="col-md-10 col-sm-12 p-a-3">
+                <div class="row omb_row-sm-offset-3 no-gutter m-a-3">
+                  <div class="col-xs-12 col-sm-6">
+                    <%= content_tag(:span, value, :class => "label label-danger") %>
+                  </div>
+                </div></div>
+          <% end %>
+          <% flash.clear %>
+          <a href="/accountsrequest" class="btn btn-primary btn-sm" style="background-color: #73E9EA">Request new account</a>
+          <br/>
         </div>
-        <div class="col-md-6">
-          <div style="margin-left: 10px; margin-top: 20px">
+        <div class="col-md-5">
+          <%= form_tag({:controller=> 'home', :action => :create, :method => :post}, {:class => 'form-horizontal'})%>
+          <div class="form-group" style="margin-left: 10px; margin-top: 20px">
             <label for="select" class="control-label">Select Account</label>
             <!--TODO: Get list of accounts from DB and populate below-->
-            <select class="form-control" id="select" name = "session[size]">
-              <option value="">---</option>
-              <option value="4">8966562780</option>
-              <option value="6">8966562781</option>
-              <option value="12">8966562782</option>
+            <select class="form-control" id="select" name = "account">
+              <!--<option value="">-&#45;&#45;</option>-->
+              <% @accounts.each do |account| %>
+                  <% if session[:email] == account.email %>
+                      <option><%= account.account_number %></option>
+                  <% end %>
+              <% end %>
             </select>
+          </div>
+          <div class="form-group col-md-4">
+            <div class="col-lg-10 col-lg-offset-2">
+              <!--<button type="reset" class="btn btn-default">Reset</button>-->
+              <button type="submit" class="btn btn-primary">Go</button>
+            </div>
           </div>
           <div style="margin-left: 10px; margin-top: 20px">
             <label for="select" class="control-label">Account Balance: $0</label>
@@ -47,6 +65,37 @@
       </div>
       <label for="select" class="control-label">List of transactions</label>
       <div class="jumbotron" style="background: #dfe3ee;">
+        <table class="table table-striped table-hover "><thead>
+        <tr>
+          <th>Transfer Type</th>
+          <th>Person</th>
+          <th>Account Number</th>
+          <th>Credited Amount</th>
+          <th>Debited Amount</th>
+          <th>Transfer Status</th>
+          <th>Balance</th>
+          <!--<th>Delete</th>-->
+        </tr>
+        </thead>
+          <tbody>
+
+            <% @transfers.each do |transfer| %>
+                  <tr>
+                    <td><%= transfer.type%></td>
+                    <td><%= transfer.person %></td>
+                    <td><%= transfer.other_acc_number%></td>
+                    <td><%= transfer.credited_amount %></td>
+                    <td><%= transfer.debited_amount%></td>
+                    <td><%= transfer.status%></td>
+                    <td><%= transfer.balance%></td>
+                  </tr>
+            <% end %>
+          <tr>
+          </tr>
+          <tr>
+          </tr>
+          </tbody>
+        </table>
         <!--TODO: Table containing a list of previous transactions come here-->
       </div>
     </div>

@@ -21,7 +21,43 @@ class UsersController < ApplicationController
     # end
   end
 
+  def updateprofile
+    @user = User.authenticate(params[:user][:email], params[:user][:old_password_field])
 
+    if (@user.id != session[:user_id])
+      flash[:notice]="Invalid email id entered"
+      redirect_to :controller => 'users', :action => 'settings'
+      return
+    end
+
+    if (@user)
+      if @user.update(user_param)
+        flash[:notice]="Profile updated"
+        redirect_to :controller => 'home', :action => 'userhome'
+      else
+        flash[:notice]="Please enter valid password"
+        redirect_to :controller => 'users', :action => 'settings'
+      end
+    else
+      flash[:notice]="Please enter valid email id and password"
+      redirect_to :controller => 'users', :action => 'settings'
+    end
+  end
+
+  # def usersettings
+  #   @user = User.getuser(session[:user_id])
+  #   redirect_to :controller => 'users', :action => 'settings'
+  # end
+
+  def settings
+    @user = User.getuser(session[:user_id])
+    render "settings"
+  end
+
+  def profile
+  @user = User.getuser(session[:user_id])
+  render "profile"
+end
 
   def new
     user = User.new

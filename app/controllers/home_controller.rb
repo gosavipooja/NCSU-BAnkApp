@@ -6,9 +6,9 @@ class HomeController < ApplicationController
   end
 
   def login
-    #Login Form
     if session[:user_id]
       redirect_to(:action => 'adminhome')
+ #     redirect_to(:action => 'userhome')
     end
   end
 
@@ -16,9 +16,23 @@ class HomeController < ApplicationController
     session[:user_id] = nil
     session[:name] = nil
     session[:email] = nil
-    flash[:notice] = "You have been successfully logged out"
-    # redirect_to(:action => 'login')
+    flash[:notice] = "Log out successful"
     render "login"
+  end
+
+  def newaccountrequest
+    @newrequest = AccountCreationRequest.new()
+    @newrequest.email = session[:email]
+    @newrequest.status = "pending"
+    if @newrequest.save
+      flash[:notice]="New account request initiated"
+      render 'userhome'
+      puts "Save Successful"
+    else
+      flash[:notice]="Problem creating new accounts creation request"
+      render 'userhome'
+    end
+
   end
 
 #######this section requires attention
@@ -56,15 +70,54 @@ class HomeController < ApplicationController
   
 
   def userhome
+    @accounts = Account.all
+    @accounts.each do |acc|
+      if session[:email] == acc.email
+        session[:selected_acc_number] = acc
+        break
+      end
+    end
 
+    if session[:selected_acc_number]
+      populate_transfers
+
+      #redirect_to :action => 'userhome'
+    end
+    #newaccountrequest
   end
 
   def adminhome
 
   end
 
+  def request_params
+    params.require(:account_creation_request).permit(:email, :status )
+  end
 
-  # def session_params
-  #   params.require(:session).permit(:date, :size, :building, :time)
-  # end
+  def create
+    session[:selected_acc_number] = params[:account].to_i
+    populate_transfers
+    #redirect_to :action => 'userhome'
+  end
+
+  def populate_transfers
+    trs = Transaction.all
+    @transfers = Array.new
+    trs.each do |transaction|
+        if session[:selected_acc_number] == transaction.credited_acc_number || session[:selected_acc_number] == transaction.debited_acc_number
+          transfer = Transfer.new
+          transfer.setstuff(session[:selected_acc_number],
+                                transaction.transaction_type,
+                                transaction.transaction_status,
+                                transaction.credited_acc_number,
+                                transaction.debited_acc_number,
+                                transaction.amount,
+                                0)       #balance= 0
+          puts transfer.debited_amount
+          @transfers.push transfer
+        end
+    end
+    puts @transfers.length
+
+  end
 end
