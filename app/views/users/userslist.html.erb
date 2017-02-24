@@ -42,11 +42,42 @@
         </div>
 
       </div>
-      <label for="select" class="control-label">List of users</label>
+      <label for="select" class="control-label">List of accounts</label>
       <div class="jumbotron" style="background: #dfe3ee;">
-        <!--TODO: Table containing a list of previous transactions come here-->
+        <div class="row">
+          <div class="col-md-8">
+            <img src="/assets/drawing.png" style="padding: 10px;"/>
+            <!--<a href="createadmin" class="btn btn-primary btn-sm">Create</a>-->
+            <a href="/create_admin" class="btn btn-primary btn-sm">Create</a>
+            <table class="table table-striped table-hover "><thead>
+            <tr>
+              <th>Account User Email</th>
+              <th>Account number</th>
+              <th>Delete</th>
+            </tr>
+            </thead><tbody>
+            <% @accounts.each do |account| %>
+                <% if session[:user_id] != admin.id && admin.email != "admin@ncsu.edu" %>
+                    <tr>
+                      <td><%= account.email %></td>
+                      <td><%= account.account_number %></td>
+                      <td>
+                        <a href="<%= account_path(@accounts) %>" style="color:#222;" data-confirm="Are you sure?" data-method="destroy" rel="nofollow">
+                          <i class="fa fa-trash" aria-hidden="true"></i></a></td> <% end %>
+                </tr>
+            <% end %>
+            <tr>
+            </tr>
+            <tr>
+            </tr>
+            </tbody>
+            </table>
+            <i class="icon-edit"></i>
+          </div>
+          <!--TODO: Table containing a list of previous transactions come here-->
+        </div>
       </div>
-    </div>
 
+    </div>
   </div>
 </div>

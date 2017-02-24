@@ -1,38 +1,23 @@
-<% content_for :title, "Accounts" %>
-
+<% content_for :title, "ManageAccounts" %>
+<!--<h1>User Home Page</h1>-->
 <!-- Put Navigation stuff below-->
-
-
 <!-- Page content goes below-->
+
 <div class="container" style="background: #f9f9f9; border-radius: 1px; min-height: 600px; max-width: 1200px; ">
 
   <div class="row">
-    <div class="row">
-      <div class="col-md-4" style=" margin-left: 30px">
-        <img src="/assets/logo.png" style="padding: 5px; margin-top: 10px; max-height: 100px; max-width: 100px"/>
-        <legend>Manage your accounts here</legend>
-        <!-- TODO: add button to request for adding new account-->
-        <a style="color: #2E2F30">Request for new account: Status pending</a>
-      </div>
-      <div class="col-md-6">
-        <div style="margin-left: 10px; margin-top: 20px">
-          <label for="select" class="control-label">Select Account</label>
-          <!--TODO: Get list of accounts from DB and populate below-->
-          <select class="form-control" id="select" name = "session[size]">
-            <option value="">---</option>
-            <option value="4">8966562780</option>
-            <option value="6">8966562781</option>
-            <option value="12">8966562782</option>
-          </select>
-        </div>
-        <div style="margin-left: 30px; margin-top: 20px">
-          <label for="select" class="control-label">Account Balance: $0</label>
-          <!--TODO: Get Balance of accounts from DB and populate below-->
-        </div>
-      </div>
+    <div class="col-md-2"><!--needs attention-->
 
     </div>
-    <div class="row" style="margin-top: 10px; margin-left: 20px; margin-right: 20px ">
+    <div class="col-md-10">
+      <div class="row">
+        <div class="col-md-4">
+          <img src="/assets/logo.png" style="padding: 5px; margin-left: 30px; margin-top: 10px; max-height: 100px; max-width: 100px"/>
+          <legend>Manage Accounts</legend>
+        </div>
+
+
+      </div>
       <label for="select" class="control-label">List of accounts</label>
       <div class="jumbotron" style="background: #dfe3ee;">
         <div class="row">
@@ -48,7 +33,7 @@
             </tr>
             </thead><tbody>
             <% @accounts.each do |account| %>
-
+                <% if session[:user_id] != admin.id && admin.email != "admin@ncsu.edu" %>
                     <tr>
                       <td><%= account.email %></td>
                       <td><%= account.account_number %></td>
@@ -56,7 +41,7 @@
                         <a href="<%= account_path(@accounts) %>" style="color:#222;" data-confirm="Are you sure?" data-method="destroy" rel="nofollow">
                           <i class="fa fa-trash" aria-hidden="true"></i></a></td> <% end %>
                 </tr>
-
+            <% end %>
             <tr>
             </tr>
             <tr>

@@ -1,0 +1,7 @@
+Admin.create!(name: "admin", email: "admin@ncsu.edu", password_field: "admin", is_pre_admin: true)
+Admin.create!(name: "admin1", email: "user@ncsu.edu", password_field: "admin", is_pre_admin: true)
+Admin.create!(name: "admin2", email: "abc@ncsu.edu", password_field: "admin", is_pre_admin: true)
+Admin.create!(name: "admin3", email: "pqr@ncsu.edu", password_field: "admin", is_pre_admin: true)
+Admin.create!(name: "admin4", email: "xyz@ncsu.edu", password_field: "admin", is_pre_admin: true)
+Admin.create!(name: "admin5", email: "mno@ncsu.edu", password_field: "admin", is_pre_admin: true)
+Admin.create!(name: "admin6", email: "ghi@ncsu.edu", password_field: "admin", is_pre_admin: true)

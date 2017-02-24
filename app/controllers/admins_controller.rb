@@ -4,7 +4,7 @@ class AdminsController < ApplicationController
   before_action :set_member, only: [:show, :edit, :update, :destroy]
 
   def index
-    @admin = Admin.all
+    @admins = Admin.all
   end
 
   def create
@@ -38,7 +38,6 @@ class AdminsController < ApplicationController
     redirect_to :action => :adminstrans
   end  
 
-
   def adminview
       # manage_customers
       # redirect_to manage_customers_administrator_path
@@ -46,6 +45,7 @@ class AdminsController < ApplicationController
   end
 
   def manage_accounts
+    redirect_to :action => "index", :controller => "accounts"
   end
 
   def new
@@ -57,7 +57,7 @@ class AdminsController < ApplicationController
   end
 
   def show
-    
+
     if session[:user_id]
       @admins = Admin.find_by_sql(["select * from admins"])  
     else
@@ -72,6 +72,14 @@ end
     else
       redirect_to :action => "login", :controller => "home"
     end
+  end
+
+  def destroy
+        @admin = Admin.find(params[:id])
+#        is_admin = @member.is_admin
+        @admin.destroy
+        #Reservation.where(:userid => params[:id]).destroy_all
+        redirect_to :action => :show_admin
   end
 
   def set_admin
