@@ -3,11 +3,13 @@
 <!-- Put Navigation stuff below-->
 
 
-
 <!-- Page content goes below-->
 
 <div class="container" style="background: #5394A8; margin-top: 1%; border-radius: 10px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-  <img src="/assets/logo.png" style="padding: 5px; margin-left: 30px; margin-top: 10px; max-height: 100px; max-width: 100px"/>
+  <div class="row">
+    <img class="col-md-10" src="/assets/logo.png" style="padding: 5px; margin-left: 30px; margin-top: 10px; max-height: 100px; max-width: 100px"/>
+    <legend class="col-md-10" style="margin-top: 40px" >Secure Banking</legend>
+  </div>
   <div class="row" style="padding: 20px">
     <% flash.each do |key, value| %>
         <div class="col-md-10 col-sm-12 p-a-3">
