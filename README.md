@@ -1,18 +1,18 @@
 Production Enviroment: http://secure-online-banking.herokuapp.com/
 
-==Preconfigured admin==
+==Preconfigured admin
 --------------------------------------------------------------------------------------------------------------------------------
 A super admin is provided with the following credentials
 
     Email: admin@ncsu.edu
     Password: admin
 	
-==Before Sign-in:==
+==Before Sign-in:
 --------------------------------------------------------------------------------------------------------------------------------
 1. Login with the admin/user's email id
 2. Signup to create a new user email.
 
-==After Sign-in:==
+==After Sign-in:
 --------------------------------------------------------------------------------------------------------------------------------
 1. Admin
 
@@ -31,7 +31,7 @@ Here, the admin can see the list of other admins. The delete button remains on f
 * Edit my profile:
 Here, the admin can change his account password.
 * Logout
---------------------------------------------------------------------------------------------------------------------------------
+
 2. User
 
 * Home: 
