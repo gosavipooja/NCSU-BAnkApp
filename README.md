@@ -31,7 +31,7 @@ Here, the admin can see the list of other admins. The delete button remains on f
 * Edit my profile:
 Here, the admin can change his account password.
 * Logout
---------------------------------------------------------------------------------------------------------------------------------
+
 
 2. User
 
