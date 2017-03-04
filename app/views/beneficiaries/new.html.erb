@@ -6,8 +6,19 @@
     <div class="container" style="background: #ffffff; min-height: 600px; max-width: 1200px; ">
 
       <div class="row">
+        <div class="col-md-2"><!--needs attention-->
+          <ul class="nav nav-pills nav-stacked">
+            <li class="active"><a href="/userhome">Home</a></li>
+            <li><a href="/transactions">Make a transfer</a></li>
+            <li><a href="/searchuser">Search User</a></li>
+            <li><a href="/beneficiaries">Manage Beneficiaries</a></li>
+            <li><a href="/usersettings">Settings</a></li>
+            <li><a href=/logout>Log out</a></li>
+          </ul>
+        </div>
         <div class="col-md-8">
           <img src="/assets/logo.png" style="padding: 5px; margin-top: 10px; max-height: 100px; max-width: 100px"/>
+          <br><br>
           <div class="jumbotron" style="background: #dfe3ee;">
             <legend>Add new beneficiary</legend>
             <%= form_tag({:action => :create, :method => :post}, {:class => 'form-horizontal'}) %>

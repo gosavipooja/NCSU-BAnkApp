@@ -8,13 +8,13 @@
   <div class="row">
     <div class="col-md-2"><!--needs attention-->
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="/adminhome">Home</a></li>
-        <li class="active"><a href="/transactionslist">List of Transactions</a></li>
-        <li><a href="/userslist">Users List</a></li>
+        <li class="active"><a href="/admins">Home</a></li>
+        <li><a href="/transactionslist">List of Transactions</a></li>
+        <li><a href="/users">Users List</a></li>
         <li><a href="/accounts">Accounts List</a></li>
         <li><a href="/accountsrequest">New Account Request</a></li>
-        <li><a href="/admins/<%=session[:user_id]%>">Admin Details</a></li>
-        <li><a href="/admins/<%=session[:user_id]%>/edit">Edit My Profile</a></li>
+        <li><a href="/adminshowall">Admin Details</a></li>
+        <li><a href="/admins/<%=session[:admin_id]%>/edit">Edit My Profile</a></li>
         <li><a href=/logout>Log out</a></li>
       </ul>
     </div>
@@ -34,6 +34,7 @@
           <th>Debited Account Number</th>
           <th>Amount</th>
           <th>Transfer Status</th>
+          <th>Approve</th>
           <th>Cancel</th>
           <!--<th>Delete</th>-->
         </tr>
@@ -48,7 +49,9 @@
                         <td><%= tran.amount %></td>
                         <td><%= tran.transaction_status%></td>
                         <%if tran.transaction_status == "Pending"%>
-                            <td><a href="/transactions/" style="color:#DB0000;" data-method="delete" rel="nofollow">
+                            <td><a href="/transactions/approve/<%= tran.id %>" style="color:#DB0000;" data-method="post" rel="nofollow">
+                              <i class="fa fa-check" aria-hidden="true"></i></a></td>
+                            <td><a href="/transactions/<%= tran.id %>" style="color:#DB0000;" data-method="delete" rel="nofollow">
                               <i class="fa fa-times" aria-hidden="true"></i></a></td>
                         <%end%>
                       </tr>
@@ -57,6 +60,7 @@
           </tbody>
         </table>
     </div>
+
 
   </div>
 </div>

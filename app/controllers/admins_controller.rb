@@ -8,16 +8,22 @@ class AdminsController < ApplicationController
     @admins = Admin.all
   end
 
+  def admin_index
+    render "index"
+  end
+
   def create
     @admin = Admin.new(admin_param)
     # if !session[:is_admin] && user.is_admin
     #   redirect_to :action => :index
     # else
       if @admin.save
+        flash[:success] = 'Admin created!'
         redirect_to :controller => 'home', :action => 'adminhome'
       else
         flash[:notice]="Please enter valid email id or password"
         redirect_to :controller => 'admins', :action => 'create'
+        #render 'new'
       end
   end
   
@@ -66,17 +72,26 @@ class AdminsController < ApplicationController
     end
   end
 
+  def showall
 
-  def show_admin
-    if session[:admin_id]
-      @admin = Admin.where("is_admin = true")
+    if session[:user_id]
+      @admins = Admin.find_by_sql(["select * from admins"])
     else
-      redirect_to :action => "login", :controller => "home"
+      redirect_to :action => "login", :controller => "sessions"
     end
   end
 
+  # def show_admin2
+  #   if session[:admin_id]
+  #     @admin = Admin.where("is_admin = true")
+  #   else
+  #     redirect_to :action => "login", :controller => "home"
+  #   end
+  # end
+
   def updateprofile
     @admin = Admin.authenticate(params[:admin][:email], params[:admin][:old_password_field])
+
 
     if (@admin.id != session[:user_id])
       flash[:notice]="Invalid email id entered"
@@ -103,7 +118,7 @@ class AdminsController < ApplicationController
 #        is_admin = @member.is_admin
         @admin.destroy
         #Reservation.where(:userid => params[:id]).destroy_all
-        redirect_to :action => :show_admin
+        redirect_to :action => 'index'
   end
 
   def set_admin
@@ -113,8 +128,6 @@ class AdminsController < ApplicationController
   def admin_param
     params.require(:admin).permit(:name, :email, :password_field, :is_pre_admin)
   end
-
-  private
 
 
 

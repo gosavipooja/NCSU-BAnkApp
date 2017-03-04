@@ -40,6 +40,54 @@ class AccountsController < ApplicationController
     end
   end
 
+
+  def admincreate
+    @accounts = Account.all
+    if params.has_key?(:q) and params[:q].present?
+      @q = params[:q].strip
+      @users = (User.where('email LIKE ?', "%#{@q}"))
+      if(@users.length <= 0)
+        render 'index'
+        return
+      end
+    end
+
+    email = @users[0].email
+
+
+    @account = Account.new
+    @account.balance = 0
+    @account.account_status = true
+    @account.email = email
+    if Account.last
+      @account.account_number = Account.last.account_number + 1
+    else
+      @account.account_number = 60000000
+    end
+
+    if @account.save
+      puts "new account created"
+      puts @account.account_number
+      flash[:notice]="Successfully created account"
+      render 'index'
+    else
+      flash[:notice]="Trouble creating account"
+      render 'index'
+    end
+  end
+
+  def deleteaccount
+    if !checkPendingAccounts(params[:id])
+      @account = Account.find(params[:id])
+      @account.destroy
+    else
+      flash[:notice]="Pending transactions present on account"
+    end
+
+    redirect_to :action => "index"
+
+  end
+
   def delete
     @request = AccountCreationRequest.find(params[:id])
     email = @request.email
@@ -90,6 +138,12 @@ class AccountsController < ApplicationController
   #     #redirect_to :action => "login", :controller => "home"
   #   end
   # end
+
+  def checkPendingAccounts(id)
+    x='SELECT "transactions"."transaction_id" FROM "transactions","accounts" WHERE "accounts"."id" = "'<<id<<'" AND ("accounts"."account_number" = "transactions"."credited_acc_number" or "accounts"."account_number" = "transactions"."debited_acc_number") AND "transactions"."transaction_status"="Pending"'
+    results = ActiveRecord::Base.connection.execute(x)
+    return results.length > 0
+  end
 
 private
 

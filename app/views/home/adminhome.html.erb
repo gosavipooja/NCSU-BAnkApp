@@ -9,10 +9,11 @@
       <ul class="nav nav-pills nav-stacked">
         <li class="active"><a href="/adminhome">Home</a></li>
         <li><a href="/transactionslist">List of Transactions</a></li>
-        <li><a href="/userslist">Users List</a></li>
+        <li><a href="/usersearch">Users List</a></li>
         <li><a href="/accounts">Accounts List</a></li>
         <li><a href="/accountsrequest">New Account Request</a></li>
-        <li><a href="/admins/<%=session[:user_id]%>">Admin Details</a></li>
+        <li><a href="/adminshowall/<%=session[:user_id]%>">Admin Details</a></li>
+        <li><a href="/adminsshowall">Admin Details</a></li>
         <li><a href="/admins/<%=session[:user_id]%>/edit">Edit My Profile</a></li>
         <li><a href=/logout>Log out</a></li>
       </ul>

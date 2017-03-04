@@ -10,9 +10,6 @@ class TransactionsController < ApplicationController
     render "transactionslist"
   end
 
-  def show
-  end
-
   def create
     debited_acc_number = params[:account].to_i
     transaction_type = params[:transaction][:transaction_type]
@@ -37,7 +34,7 @@ class TransactionsController < ApplicationController
         balance = 0
       end
       if amount <= balance
-        if transaction_type == "Withdraw" && amount > 1000
+        if transaction_type == "Withdraw"  && amount > 1000
           @transaction.transaction_status = "Pending"
         else
           @transaction.transaction_status = "Complete"
@@ -48,8 +45,9 @@ class TransactionsController < ApplicationController
         redirect_to :action => :index
       end
     else
-      @transaction.transaction_status = "Complete"
+      @transaction.transaction_status = "Pending"
     end
+
 
     if flag
       if @transaction.save
@@ -117,6 +115,62 @@ class TransactionsController < ApplicationController
     #puts "Error message " + @transaction.errors.messages.inspect
   end
 
+  def approve
+    @transaction = Transaction.find(params[:id])
+    @transaction.transaction_status = "Complete"
+
+    if @transaction.transaction_type == "Withdraw"
+      debited_acc = Account.find_by_account_number(@transaction.debited_acc_number)
+      if debited_acc.balance
+        debited_acc.balance = debited_acc.balance - @transaction.amount
+      else
+        debited_acc.balance = 0 - @transaction.amount
+      end
+      @transaction.transaction_status = "Complete"
+      if @transaction.save &&  debited_acc.save
+        puts "$$$$$$$$$$$$$$$$$$$$$$$$$ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+        puts "Transaction completed"
+        puts "$$$$$$$$$$$$$$$$$$$$$$$$$ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+      else
+        puts "$$$$$$$$$$$$$$$$$$$$$$$$$ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+        puts "Trouble completing transaction"
+        puts "$$$$$$$$$$$$$$$$$$$$$$$$$ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+      end
+    else
+      debited_acc = Account.find_by_account_number(@transaction.debited_acc_number)
+      if debited_acc.balance
+        debited_acc.balance = debited_acc.balance + @transaction.amount
+      else
+        debited_acc.balance = @transaction.amount
+      end
+      @transaction.transaction_status = "Complete"
+      if @transaction.save && debited_acc.save
+        puts "$$$$$$$$$$$$$$$$$$$$$$$$$ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+        puts "Transaction completed"
+        puts "$$$$$$$$$$$$$$$$$$$$$$$$$ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+      else
+        puts "$$$$$$$$$$$$$$$$$$$$$$$$$ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+        puts "Trouble completing transaction"
+        puts "$$$$$$$$$$$$$$$$$$$$$$$$$ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+      end
+    end
+    redirect_to :action => 'transactionslist'
+  end
+
+  def destroy
+    @transaction = Transaction.find(params[:id])
+
+    @transaction.transaction_status = "Cancelled"
+    if @transaction.save
+      #puts "@request.status = Cancelled ---------------- save successful"
+      flash[:notice]="Transaction cancelled"
+      redirect_to :action => 'transactionslist'
+    else
+     # puts "@request.status = Cancelled ---------------- save unsuccessful"
+      flash[:notice]="Trouble cancelling request"
+      redirect_to :action => 'transactionslist'
+    end
+  end
 
   def dotransaction
 

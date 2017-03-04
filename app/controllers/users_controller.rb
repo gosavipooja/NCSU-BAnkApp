@@ -3,12 +3,33 @@ class UsersController < ApplicationController
   before_action :user_param, only: [:show, :edit, :update, :destroy]
 
   def index
-    @users = User.all
+
+    #if params[:user][:searched_email]
+    if params.has_key?(:q) and params[:q].present?
+      puts "*********************** *********************** *********************** *********************** *********************** "
+      puts @q
+      puts "inside index after search submit"
+      puts "*********************** *********************** *********************** *********************** *********************** "
+
+      @q = params[:q].strip
+      @users = (User.where('email LIKE ?', "%#{@q}"))
+      #render 'usersearch'
+    else
+      puts "*********************** *********************** *********************** *********************** *********************** "
+      puts "@q is empty"
+      puts "*********************** *********************** *********************** *********************** *********************** "
+
+      @q =''
+      @users = User.all
+      #render 'usersearch'
+
+    end
   end
 
   def userslist
     @users = User.all
-    render 'userslist'
+    redirect_to :controller => 'users'
+    #render 'users'
   end
 
   def create
@@ -86,4 +107,74 @@ end
   def user_param
     params.require(:user).permit(:name, :email, :password_field, :address)
   end
+
+  def usersearch
+
+    # if params.has_key?(:q) and params[:q].present?
+    #   puts "*********************** *********************** *********************** *********************** *********************** "
+    #   puts @q
+    #   puts "inside index after search submit"
+    #   puts "*********************** *********************** *********************** *********************** *********************** "
+    #
+    #   @q = params[:q].strip
+    #   @users = (User.where('email LIKE ?', "%#{@q}"))
+    #   #render 'usersearch'
+    # else
+    #   puts "*********************** *********************** *********************** *********************** *********************** "
+    #   puts "@q is empty"
+    #   puts "*********************** *********************** *********************** *********************** *********************** "
+    #
+    #   @q =''
+    #   @users = User.all
+    #   render 'usersearch'
+    #
+    # end
+
+
+
+    if params.has_key?(:q) and params[:q].present?
+      puts "*********************** *********************** *********************** *********************** *********************** "
+      puts @q
+      puts "inside index after search submit"
+      puts "*********************** *********************** *********************** *********************** *********************** "
+
+      @q = params[:q].strip
+      @accounts = (Account.where('email LIKE ?', "%#{@q}"))
+      #render 'usersearch'
+    else
+      puts "*********************** *********************** *********************** *********************** *********************** "
+      puts "@q is empty"
+      puts "*********************** *********************** *********************** *********************** *********************** "
+
+      @q =''
+      @accounts = Account.all
+      render 'usersearch'
+
+    end
+
+  end
+
+  def deleteuser
+    if !checkPendingTransfers(params[:id])
+      @user = User.find(params[:id])
+      @user.destroy
+    else
+      flash[:notice]="Pending transactions present on the user"
+    end
+
+    redirect_to :action => "index"
+
+  end
+
+  def checkPendingTransfers(id)
+    x='SELECT "transactions"."transaction_id" FROM "transactions","users","accounts" WHERE "users"."id" = "'<<id<<'" AND "users"."email"="accounts"."email" AND ("accounts"."account_number" = "transactions"."credited_acc_number" or "accounts"."account_number" = "transactions"."debited_acc_number") AND "transactions"."transaction_status"="Pending"'
+    results = ActiveRecord::Base.connection.execute(x)
+    return results.length > 0
+  end
+
+  def show
+    @users = User.all
+    render 'signup'
+  end
+
 end

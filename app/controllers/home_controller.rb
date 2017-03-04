@@ -103,7 +103,7 @@ class HomeController < ApplicationController
   end
 
   def adminhome
-
+    redirect_to admins_index_path
   end
 
   def request_params

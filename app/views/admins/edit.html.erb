@@ -1,5 +1,18 @@
 <% content_for :title, "Change Password" %>
 
+<div class="col-md-2"><!--needs attention-->
+  <ul class="nav nav-pills nav-stacked">
+    <li class="active"><a href="/admins">Home</a></li>
+    <li><a href="/transactionslist">List of Transactions</a></li>
+    <li><a href="/users">Users List</a></li>
+    <li><a href="/accounts">Accounts List</a></li>
+    <li><a href="/accountsrequest">New Account Request</a></li>
+    <li><a href="/adminshowall">Admin Details</a></li>
+    <li><a href="/admins/<%=session[:admin_id]%>/edit">Edit My Profile</a></li>
+    <li><a href=/logout>Log out</a></li>
+  </ul>
+</div>
+
 <div class="container" style="background: #fff; margin-top: 1%; border-radius: 25px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 
   <% flash.each do |key, value| %>

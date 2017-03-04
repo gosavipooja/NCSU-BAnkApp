@@ -1,5 +1,14 @@
 <% content_for :title, "Change Password" %>
-
+<div class="col-md-2"><!--needs attention-->
+  <ul class="nav nav-pills nav-stacked">
+    <li class="active"><a href="/userhome">Home</a></li>
+    <li><a href="/transactions">Make a transfer</a></li>
+    <li><a href="/searchuser">Search User</a></li>
+    <li><a href="/beneficiaries">Manage Beneficiaries</a></li>
+    <li><a href="/usersettings">Settings</a></li>
+    <li><a href=/logout>Log out</a></li>
+  </ul>
+</div>
 <div class="container" style="background: #fff; margin-top: 1%; border-radius: 25px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 
   <% flash.each do |key, value| %>

@@ -8,20 +8,20 @@
   <div class="row">
     <div class="col-md-2"><!--needs attention-->
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="/adminhome">Home</a></li>
+        <li class="active"><a href="/admins">Home</a></li>
         <li><a href="/transactionslist">List of Transactions</a></li>
-        <li><a href="/userslist">Users List</a></li>
-        <li class="active"><a href="/accounts">Accounts List</a></li>
+        <li><a href="/users">Users List</a></li>
+        <li><a href="/accounts">Accounts List</a></li>
         <li><a href="/accountsrequest">New Account Request</a></li>
-        <li><a href="/admins/<%=session[:user_id]%>">Admin Details</a></li>
-        <li><a href="/admins/<%=session[:user_id]%>/edit">Edit My Profile</a></li>
+        <li><a href="/adminshowall">Admin Details</a></li>
+        <li><a href="/admins/<%=session[:admin_id]%>/edit">Edit My Profile</a></li>
         <li><a href=/logout>Log out</a></li>
       </ul>
     </div>
     <div class="row">
       <div class="col-md-4" style=" margin-left: 30px">
         <img src="/assets/logo.png" style="padding: 5px; margin-top: 10px; max-height: 100px; max-width: 100px"/>
-        <legend>Manage your accounts here</legend>
+        <legend>Manage the list of accounts</legend>
       </div>
 
       <div class="row" style="margin-top: 10px; margin-left: 20px; margin-right: 20px ">
@@ -47,6 +47,8 @@
                       <% else %>
                           <td> ACTIVE </td>
                       <% end %>
+                      <td><a href= "/accountdelete/<%= account.id %>" class="btn btn-primary btn-sm">Delete</a>
+                      </td>
                     </tr>
                 <% end %>
               </tbody>
@@ -56,4 +58,12 @@
     </div>
     </div>
   </div>
+  <%= form_tag(adminaccountcreate_path, method: :get, id: 'search-form') do %>
+      <div class="col-md-8">
+        <%= search_field_tag :q, @q, placeholder: 'Enter user\'s email', class: 'form-control col-md-8' %>
+      </div>
+      <div class="col-md-2">
+        <%= submit_tag 'Add Account', name: nil, class: 'btn btn-primary' %>
+      </div>
+  <% end %>
 </div>
